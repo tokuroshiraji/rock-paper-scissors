@@ -10,11 +10,57 @@ const DRAW = 2;
 const result = ['WIN', 'LOSE', 'DRAW'];
 
 let enemy_hand = createHand();
-let player_hand = createHand();
 
-document.write('<p>Your hand is ', hands[player_hand], '</p>');
-document.write('<p>Enemy hand is ', hands[enemy_hand], '</p>');
-document.write('<p>Match result : ', result[judgePlayerWin(player_hand,enemy_hand)], '</p>');
+let match_count = 0;
+
+console.log('hello');
+
+let player_hand_elements = document.getElementsByClassName('player_hand');
+
+let body_element = document.getElementsByTagName('body');
+
+for ( let i = 0; i < player_hand_elements.length; i++){
+    player_hand_elements[i].onclick = function(){
+        player_hand = hands.indexOf(player_hand_elements[i].id);
+        if(player_hand===-1){
+            displayError();
+        }else{
+            displayMatchResult(player_hand,enemy_hand);
+        }
+    }
+}
+
+// 結果表示
+function displayMatchResult( p_hand,e_hand ){
+    if(match_count > 0){
+        body_element[0].removeChild(body_element[0].lastChild);
+        body_element[0].removeChild(body_element[0].lastChild);
+        body_element[0].removeChild(body_element[0].lastChild);
+        body_element[0].removeChild(body_element[0].lastChild);
+    }
+
+    let result_header = document.createElement('h2');
+    let result_header_text = document.createTextNode('Match Result');
+    result_header.appendChild(result_header_text);
+
+    let result_p1 = document.createElement('p');
+    let result_p1_text = 'Your hand is ' + hands[player_hand];
+    result_p1.appendChild(document.createTextNode(result_p1_text));
+
+    let result_p2 = document.createElement('p');
+    let result_p2_text = 'Enemy hand is ' + hands[enemy_hand];
+    result_p2.appendChild(document.createTextNode(result_p2_text));
+
+    let result_p3 = document.createElement('p');
+    let result_p3_text = 'Match result : ' + result[judgePlayerWin(player_hand,enemy_hand)];
+    result_p3.appendChild(document.createTextNode(result_p3_text));
+
+    body_element[0].appendChild(result_header,body_element);
+    body_element[0].appendChild(result_p1,body_element);
+    body_element[0].appendChild(result_p2,body_element);
+    body_element[0].appendChild(result_p3,body_element);
+    match_count++;
+}
 
 // 敵の手を作成
 function createHand(){
