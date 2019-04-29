@@ -62,6 +62,20 @@ function displayMatchResult( p_hand,e_hand ){
     match_count++;
 }
 
+// エラー表示
+function displayError(){
+    let result_header = document.createElement('h2');
+    let result_header_text = document.createTextNode('ERROR');
+    result_header.appendChild(result_header_text);
+
+    let result_p1 = document.createElement('p');
+    let result_p1_text = 'Your hand is wrong. Reload this page and try again.';
+    result_p1.appendChild(document.createTextNode(result_p1_text));
+
+    body_element[0].appendChild(result_header,body_element);
+    body_element[0].appendChild(result_p1,body_element);
+}
+
 // 敵の手を作成
 function createHand(){
     // 完全ランダム
